@@ -1,4 +1,5 @@
-import 'package:shopping_list/widgets/shoplist_form.dart';
+import 'package:flutter/material.dart';
+// import 'package:shopping_list/screens/shoplist_form.dart';
 
 class ShopItem {
   final String name;
