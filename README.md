@@ -77,3 +77,68 @@ Refactoring File
 - Buat folder baru screens dalam direktori lib.
 - Pindahkan halaman-halaman yang sudah dibuat sebelumnya ke dalam folder screens.
 - Sesuaikan import dan path berkas sesuai perubahan struktur direktori.
+
+
+# tugas 9
+
+1. Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+Bisa, tetapi agar kita dapat memahami struktur data dan memudahkan identifikasi bug lebih disarankan untuk membuat model sebelum mengambil data json. Selain itu, model dapat memvalidasi data yang diterima dan memastikan bahwa data tersebut sesuai.
+
+2. Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+CookieRequest adalah kelas yang digunakan untuk mengirim permintaan HTTP dengan header cookie. Dengan menggunakan instance ini, kita dapat mengelola cookie lebih mudah dan memastikan bahwa cookie yang sama digunakan di seluruh aplikasi.
+
+3. Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.
+Dari endpoint json projek django, salin data json dan buka web quicktype. Ubah setup name menjadi Product, source type menjadi JSON, dan language menjadi Dart. Paste data json di bagian kiri quicktype, lalu salin kode yang telah digenerate oleh quicktype. Paste kode di file dart yang diinginkan. Lalu gunakan potongan kode di bawah pada file dart yang berbeda.
+    var url = Uri.parse(
+        'http://<URL_APP_KAMU>/json/');
+    var response = await http.get(
+        url,
+        headers: {"Content-Type": "application/json"},
+    );
+
+    // melakukan decode response menjadi bentuk json
+    var data = jsonDecode(utf8.decode(response.bodyBytes));
+
+4. Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+Setup authentication di django dan tambahkan beberapa variabel dan INSTALLED_APPS di settings.py, buat metode login di views.py pada folder authentication, tambahkan metode path url routing di urls.py, install package, modifikasi root widget untuk menyediakan CookieRequest library ke semua child widgets dengan menggunakan Provider, buat file untuk login.dart di proyek yang menggunakan dart, ubah home: MyHomePage() menjadi home: LoginPage() agar saat dirun pengguna dibawa ke halaman login.
+
+5. Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
+    - Widget login: untuk login dan autentikasi user.
+    - Widget logout: untuk logout user.
+
+6. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
+    a. Setup Autentikasi pada Django untuk Flutter
+       - Buat django-app bernama authentication pada project Django.
+       - Tambahkan authentication ke INSTALLED_APPS pada settings.py.
+       - Install library dengan menjalankan pip install django-cors-headers.
+       - Tambahkan corsheaders ke INSTALLED_APPS dan middleware pada settings.py.
+       - Tambahkan variabel CORS pada settings.py.
+       - Buat view untuk login pada authentication/views.py.
+       - Tambahkan URL routing ke view login.
+       - Tambahkan path auth/ ke urls.py pada project.
+    b. Integrasi Sistem Autentikasi pada Flutter
+       - Install package provider dan pbp_django_auth menggunakan terminal.
+       - Modifikasi root widget dengan menggunakan Provider untuk menyediakan CookieRequest.
+       - Buat file login.dart pada folder screens.
+       - Isi login.dart dengan kode untuk form login.
+       - Ganti home: MyHomePage() menjadi home: LoginPage() pada main.dart.
+       - Jalankan aplikasi Flutter dan coba login.
+    c. Pembuatan Model Kustom
+       - Gunakan website Quicktype untuk membuat model Dart dari data JSON.
+       - Buat file product.dart dan tempelkan kode model yang dihasilkan.
+       - Fetch Data dari Django untuk Ditampilkan ke Flutter
+       - Tambahkan dependensi HTTP dengan menjalankan flutter pub add http.
+       - Izinkan akses internet pada AndroidManifest.xml.
+       - Buat file list_product.dart pada folder lib/screens.
+       - Implementasikan fungsi fetchProduct untuk mengambil data dari Django.
+       - Tampilkan data produk pada halaman Flutter.
+    d. Integrasi Form Flutter dengan Layanan Django
+       - Tambahkan fungsi view pada main/views.py untuk membuat produk baru.
+       - Tambahkan path baru pada main/urls.py untuk fungsi view tersebut.
+       - Hubungkan halaman shoplist_form.dart dengan CookieRequest.
+       - Modifikasi tombol tambah pada form untuk mengirim data ke Django.
+    e. Implementasi Fitur Logout
+       - Tambahkan metode view untuk logout pada authentication/views.py.
+       - Tambahkan path baru untuk logout pada authentication/urls.py.
+       - Modifikasi widget shop_card.dart untuk menangani logout.
+       - Tambahkan fungsi logout pada Flutter dan atur navigasi setelah logout.

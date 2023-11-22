@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:<APP_NAME>/models/product.dart';
-import 'package:<APP_NAME>/widgets/left_drawer.dart';
+import 'package:shopping_list/models/product.dart';
+import 'package:shopping_list/widgets/left_drawer.dart';
 
 class ProductPage extends StatefulWidget {
     const ProductPage({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class _ProductPageState extends State<ProductPage> {
 Future<List<Product>> fetchProduct() async {
     // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
     var url = Uri.parse(
-        'http://localhost:8000/json');
+        'http://localhost:8000/json/');
     var response = await http.get(
         url,
         headers: {"Content-Type": "application/json"},

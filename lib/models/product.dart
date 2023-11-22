@@ -1,26 +1,61 @@
-// This file was generated from JSON Schema using quicktype, do not modify it directly.
-// To parse the JSON, add this file to your project and do:
+// To parse this JSON data, do
 //
-//   let product = try? JSONDecoder().decode(Product.self, from: jsonData)
+//     final product = productFromJson(jsonString);
 
-import Foundation
+import 'dart:convert';
 
-// MARK: - Product
-struct Product: Codable {
-    let model: String
-    let pk: Int
-    let fields: Fields
+Product productFromJson(String str) => Product.fromJson(json.decode(str));
+
+String productToJson(Product data) => json.encode(data.toJson());
+
+class Product {
+    String model;
+    int pk;
+    Fields fields;
+
+    Product({
+        required this.model,
+        required this.pk,
+        required this.fields,
+    });
+
+    factory Product.fromJson(Map<String, dynamic> json) => Product(
+        model: json["model"],
+        pk: json["pk"],
+        fields: Fields.fromJson(json["fields"]),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "model": model,
+        "pk": pk,
+        "fields": fields.toJson(),
+    };
 }
 
-// MARK: - Fields
-struct Fields: Codable {
-    let name, dateAdded: String
-    let price: Int
-    let description: String
+class Fields {
+    String name;
+    DateTime dateAdded;
+    int price;
+    String description;
 
-    enum CodingKeys: String, CodingKey {
-        case name
-        case dateAdded = "date_added"
-        case price, description
-    }
+    Fields({
+        required this.name,
+        required this.dateAdded,
+        required this.price,
+        required this.description,
+    });
+
+    factory Fields.fromJson(Map<String, dynamic> json) => Fields(
+        name: json["name"],
+        dateAdded: DateTime.parse(json["date_added"]),
+        price: json["price"],
+        description: json["description"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "date_added": "${dateAdded.year.toString().padLeft(4, '0')}-${dateAdded.month.toString().padLeft(2, '0')}-${dateAdded.day.toString().padLeft(2, '0')}",
+        "price": price,
+        "description": description,
+    };
 }
