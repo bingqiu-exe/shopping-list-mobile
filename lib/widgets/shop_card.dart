@@ -8,8 +8,9 @@ import 'package:shopping_list/screens/list_product.dart';
 class ShopItem {
   final String name;
   final IconData icon;
+  final int number;
 
-  ShopItem(this.name, this.icon);
+  ShopItem(this.number, this.name, this.icon);
 }
 
 class ShopCard extends StatelessWidget {
@@ -50,7 +51,7 @@ class ShopCard extends StatelessWidget {
           else if (item.name == "Logout") {
             final response = await request.logout(
                 // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-                "http://<APP_URL_KAMU>/auth/logout/");
+                "http://localhost:8000/auth/logout/");
             String message = response["message"];
             if (response['status']) {
               String uname = response["username"];
@@ -68,6 +69,7 @@ class ShopCard extends StatelessWidget {
             }
           }
         },
+        
         child: Container(
           // Container untuk menyimpan Icon dan Text
           padding: const EdgeInsets.all(8),
@@ -75,6 +77,11 @@ class ShopCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  item.number.toString(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
+                ),
                 Icon(
                   item.icon,
                   color: Colors.white,
